@@ -2,7 +2,8 @@ use std::process::Command;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use dotenv::dotenv;
-use std::env;
+use std::{env, process};
+use std::path::Path;
 
 #[derive(Serialize, Debug)]
 struct DeepSeekRequest {
@@ -122,8 +123,18 @@ async fn commit_changes(commit_message: &str) -> Result<(), String> {
     }
 }
 
+fn is_git_repository() -> bool {
+    Path::new(".git").exists()
+}
+
+
 #[tokio::main]
 async fn main() {
+    if !is_git_repository() {
+        eprintln!("Current directory is not a Git repository.");
+        return;
+    }
+
     dotenv().ok(); // 加载 .env 文件
 
     // 获取 git diff

@@ -76,7 +76,7 @@ async fn generate_commit_message(diff: &str) -> Result<String, Box<dyn std::erro
         messages: vec![
             Message {
                 role: "system".to_string(),
-                content: "You are a helpful assistant to great a short git commit message".to_string(),
+                content: "You are a helpful assistant to great a short git commit message.(Short output, only keep the git commit message)".to_string(),
             },
             Message {
                 role: "user".to_string(),
